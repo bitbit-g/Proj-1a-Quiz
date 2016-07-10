@@ -38,10 +38,27 @@ display winner or draw
 reload game
 
 
+var questions  = [
+  "You would wear a ‘sautoir’ around your neck.",
+  "Turnip is a ‘rutabaga’ type of vegetable.",
+  "The Suez Canal is in Italy.",
+  "Fe is the symbol of iron.",
+  "Pyrenees is between Greece and Italy",
+  "The goose was the first bird domesticated by man",
+  "Neptune is closest to the Sun.",
+  "Fission powers the sun.",
+  "The sun is about 5 billion years old.",
+  "The earth is about 5.5 billion years old."
+];
 
+var ans = [ True, True, False, True, False,  True, False, False, True, False];
 
+var turn = 1;
+var scoreP1 = 0;
+var scoreP2 = 0;
 
-
+Math.floor(Math.random()* 10);
+integer
 
 numberOfQuestions()   //It should return an integer that is the number of questions in a game
 currentQuestion()  //It should return an integer that is the zero-based index of the current question in the quiz
