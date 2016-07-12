@@ -1,44 +1,9 @@
-10 questions
-true or false
-randomised questions
-turns is automatic
-score
+//Reset Game
+function restart() {
+  location.reload();
+}
 
-questions - array
-
-true/false for one question
-
-
-//pseudo code:
-User
-Game start
-Question 1
-player 1 select true or false
-question 2
-player 2 select true or false
-until question 10
-End
-
-Computer
-Initiate Game
-randomly choose question
-display question
-accept selection from user True/False
-compare with answer, correct or wrong
-keep score +1 or 0
-count number of questions completed +1
-randomly choose question
-display question
-accept selection from user True/False
-compare with answer, correct or wrong
-keep score +1 or 0
-count number of questions completed +1
-count until 10 then finish
-display winner or draw
-reload game
-
-
-var questions  = [
+var questions = [
   "You would wear a ‘sautoir’ around your neck.",
   "Turnip is a ‘rutabaga’ type of vegetable.",
   "The Suez Canal is in Italy.",
@@ -48,29 +13,110 @@ var questions  = [
   "Neptune is closest to the Sun.",
   "Fission powers the sun.",
   "The sun is about 5 billion years old.",
-  "The earth is about 5.5 billion years old."
-];
+  "The earth is about 5.5 billion years old.",
+  "Bruce Springsteen is a guitarist also known as Slowhand",
+  "An otter's home is called Holt",
+  "Madonna had a 1985 hit with Saving All My Love For You",
+  "Sugar Loaf mountain overlooks Rio De Janeiro and its harbour",
+  "Paul Ince was the first black player to captain England's soccer team",
+  "In Roman mythology, Neptune is the equivalent to the Greek god Zeus",
+  "Mr Spock from Star Trek said, 'Live long and prosper'",
+  "Anton Chekov wrote The Seabeast, Uncle Vanka, and The Apple Park",
+  "GNU is the other name for Wilderbeast",
+  "Flowerpot Men had a 1960s hit with Let's Go To San Francisco",
+  "The time-machine car in the film Back To The Future was the DE LOREAN",
+  ];
 
-var ans = [ True, True, False, True, False,  True, False, False, True, False];
+var answers = ["T", "T",
+"F", "T", "F", "T", "F",
+"F", "T", "F", "F", "T", "F", "T", "T", "F", "T", "F", "F", "T", "T"];
 
 var turn = 1;
+var noofQues = 1;
+
+//connect true button click to value 1
+
+var buttont = document.getElementById("T");
+var buttonf = document.getElementById("F");
+buttont.addEventListener("click", onClick);
+buttonf.addEventListener("click", onClick);
+var event = document.getElementById(event);
+
+
+//chooseQuestion + display Question
+
+var randm;
+
+function chooseQn(){
+  randm = Math.floor(Math.random() * questions.length);
+  var dispQn = document.getElementById("questions");
+  dispQn.innerText=questions[randm];
+  console.log(questions[randm]);
+}
+
+function spliceQnAns(){
+var rmvQn = questions.splice(randm, 1);
+var rmvAns = answers.splice(randm, 1);
+}
+chooseQn();
+spliceQnAns();
+//chooseQn();
+
+//keep score
 var scoreP1 = 0;
 var scoreP2 = 0;
 
-Math.floor(Math.random()* 10);
-integer
+function pOneScore(){
+    var one = document.getElementById("one");
+    scoreP1 += 1;
+    one.innerText = scoreP1;
 
-numberOfQuestions()   //It should return an integer that is the number of questions in a game
-currentQuestion()  //It should return an integer that is the zero-based index of the current question in the quiz
+}
 
-correctAnswer()  //It should return an integer that is the zero-based index the correct answer for the currrent question
+function pTwoScore(){
+var two = document.getElementById("two");
+    scoreP2 += 1;
+    two.innerText = scoreP2;
+}
 
-numberOfAnswers() //It should return an integer that is the number of choices for the current question
-
-playTurn(choice)  //It should take a single integer, which specifies which choice the current player wants to make. It should return a boolean true/false if the answer is correct.
-
-isGameOver() //It should return a true or false if the quiz is over.
-
-whoWon()  //It should return 0 if the game is not yet finished. Else it should return either 1 or 2 depending on which player won. It should return 3 if the game is a draw.
-
-restart()  //It should restart the game so it can be played again.
+function onClick(event){
+  var ans = event.target.getAttribute("id");
+  //check gameover
+console.log("turn is: "+ turn);
+console.log("ans is: "+ ans + ", random: " + answers[randm]);
+console.log("qn is: "+ questions[randm]);
+if (turn % 2 === 1 && noofQues <= 20) {
+  if (ans === answers[randm]) {
+    pOneScore();
+    turn += 1;
+    noofQues += 1;
+    chooseQn();
+    spliceQnAns();
+   console.log("p1 is correct");
+    }
+  else {
+    turn += 1;
+    noofQues += 1;
+    chooseQn();
+    spliceQnAns();
+    console.log("p1 is wrong");
+  }
+}
+else if (turn % 2 === 0 && noofQues <= 20){
+  if (ans === answers[randm]) {
+    pTwoScore();
+    turn += 1;
+    noofQues += 1;
+    chooseQn();
+    spliceQnAns();
+    console.log("p2 is correct");
+  }
+  else {
+    turn += 1;
+    noofQues += 1;
+    chooseQn();
+    spliceQnAns();
+      console.log("p2 is wrong");
+  }
+}
+}
