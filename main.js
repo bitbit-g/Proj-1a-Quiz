@@ -1,35 +1,97 @@
 //Reset Game
-function restart() {
-  location.reload();
-}
+var reset = document.getElementById("reset");
+var clickReset = function() {
+    location.reload();
+};
+reset.addEventListener('click', clickReset);
 
 var questions = [
-  "You would wear a ‘sautoir’ around your neck.",
-  "Turnip is a ‘rutabaga’ type of vegetable.",
-  "The Suez Canal is in Italy.",
-  "Fe is the symbol of iron.",
-  "Pyrenees is between Greece and Italy",
-  "The goose was the first bird domesticated by man",
-  "Neptune is closest to the Sun.",
-  "Fission powers the sun.",
-  "The sun is about 5 billion years old.",
-  "The earth is about 5.5 billion years old.",
-  "Bruce Springsteen is a guitarist also known as Slowhand",
-  "An otter's home is called Holt",
-  "Madonna had a 1985 hit with Saving All My Love For You",
-  "Sugar Loaf mountain overlooks Rio De Janeiro and its harbour",
-  "Paul Ince was the first black player to captain England's soccer team",
-  "In Roman mythology, Neptune is the equivalent to the Greek god Zeus",
-  "Mr Spock from Star Trek said, 'Live long and prosper'",
-  "Anton Chekov wrote The Seabeast, Uncle Vanka, and The Apple Park",
-  "GNU is the other name for Wilderbeast",
-  "Flowerpot Men had a 1960s hit with Let's Go To San Francisco",
-  "The time-machine car in the film Back To The Future was the DE LOREAN",
+  {
+    question: "You would wear a ‘sautoir’ around your neck.",
+    answer: "T"
+  },
+  {
+    question: "Turnip is a ‘rutabaga’ type of vegetable.",
+    answer: "T"
+  },
+  {
+    question: "The Suez Canal is in Italy.",
+    answer: "F"
+  },
+  {
+    question: "Fe is the symbol of iron.",
+    answer: "T"
+  },
+  {
+    question: "Pyrenees is between Greece and Italy",
+    answer: "F"
+  },
+  {
+    question: "The goose was the first bird domesticated by man",
+    answer: "T"
+  },
+  {
+    question: "Neptune is closest to the Sun.",
+    answer: "F"
+  },
+  {
+    question: "Fission powers the sun.",
+    answer: "F"
+  },
+  {
+    question: "The sun is about 5 billion years old.",
+    answer: "T"
+  },
+  {
+    question: "The earth is about 5.5 billion years old.",
+    answer: "F"
+  },
+  {
+    question: "Bruce Springsteen is a guitarist also known as Slowhand",
+    answer: "F"
+  },
+  {
+    question: "An otter's home is called Holt",
+    answer: "T"
+  },
+  {
+    question: "Madonna had a 1985 hit with Saving All My Love For You",
+    answer: "F"
+  },
+  {
+    question: "Sugar Loaf mountain overlooks Rio De Janeiro and its harbour",
+    answer: "T"
+  },
+  {
+    question: "Paul Ince was the first black player to captain England's soccer team",
+    answer: "T"
+  },
+  {
+    question: "In Roman mythology, Neptune is the equivalent to the Greek god Zeus",
+    answer: "F"
+  },
+  {
+    question: "Mr Spock from Star Trek said, 'Live long and prosper'",
+    answer: "T"
+  },
+  {
+    question: "Anton Chekov wrote The Seabeast, Uncle Vanka, and The Apple Park",
+    answer: "F"
+  },
+  {
+    question: "GNU is the other name for Wilderbeast",
+    answer: "F"
+  },
+  {
+    question: "Flowerpot Men had a 1960s hit with Let's Go To San Francisco",
+    answer: "T"
+  },
+  {
+    question: "The time-machine car in the film Back To The Future was the DE LOREAN",
+    answer: "T"
+  }
   ];
 
-var answers = ["T", "T",
-"F", "T", "F", "T", "F",
-"F", "T", "F", "F", "T", "F", "T", "T", "F", "T", "F", "F", "T", "T"];
 
 var turn = 1;
 var noofQues = 1;
@@ -50,17 +112,14 @@ var randm;
 function chooseQn(){
   randm = Math.floor(Math.random() * questions.length);
   var dispQn = document.getElementById("questions");
-  dispQn.innerText=questions[randm];
-  console.log(questions[randm]);
+  dispQn.innerText=questions[randm].question;
 }
-
+// spliceQnAns();
 function spliceQnAns(){
-var rmvQn = questions.splice(randm, 1);
-var rmvAns = answers.splice(randm, 1);
+var rmvQnAns = questions.splice(randm, 1);
 }
 chooseQn();
-spliceQnAns();
-//chooseQn();
+
 
 //keep score
 var scoreP1 = 0;
@@ -79,44 +138,58 @@ var two = document.getElementById("two");
     two.innerText = scoreP2;
 }
 
+function checkWinner(){
+  if (scoreP1 === scoreP2){
+    alert("It's a tie! Click Reset to play again");
+  }
+  else if (scoreP1 > scoreP2 || scoreP1 === 5){
+    alert("Player 1 wins! Click Reset to play again");
+  }
+  else if (scoreP1 < scoreP2 || scoreP1 === 5){
+    alert("Player 2 wins! Click Reset to play again");
+  }
+}
+
 function onClick(event){
   var ans = event.target.getAttribute("id");
-  //check gameover
-console.log("turn is: "+ turn);
-console.log("ans is: "+ ans + ", random: " + answers[randm]);
-console.log("qn is: "+ questions[randm]);
-if (turn % 2 === 1 && noofQues <= 20) {
-  if (ans === answers[randm]) {
+
+if (turn % 2 === 1) {
+  if (ans === questions[randm].answer) {
     pOneScore();
     turn += 1;
     noofQues += 1;
-    chooseQn();
+    if(noofQues === 10){checkWinner();}
     spliceQnAns();
+    chooseQn();
    console.log("p1 is correct");
     }
   else {
     turn += 1;
     noofQues += 1;
-    chooseQn();
+    if(noofQues === 10){checkWinner();}
     spliceQnAns();
+    chooseQn();
     console.log("p1 is wrong");
   }
 }
-else if (turn % 2 === 0 && noofQues <= 20){
-  if (ans === answers[randm]) {
+else if (turn % 2 === 0){
+  if (ans === questions[randm].answer) {
     pTwoScore();
     turn += 1;
     noofQues += 1;
-    chooseQn();
+    if(noofQues === 10){checkWinner();}
     spliceQnAns();
+    chooseQn();
     console.log("p2 is correct");
   }
   else {
     turn += 1;
     noofQues += 1;
-    chooseQn();
+    if(noofQues === 10){checkWinner();}
     spliceQnAns();
-      console.log("p2 is wrong");
+    chooseQn();
+    console.log("p2 is wrong");
   }
+
 }
 }
