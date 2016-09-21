@@ -1,59 +1,195 @@
-10 questions
-true or false
-randomised questions
-turns is automatic
-score
+//Reset Game
+var reset = document.getElementById("reset");
+var clickReset = function() {
+    location.reload();
+};
+reset.addEventListener('click', clickReset);
 
-questions - array
+var questions = [
+  {
+    question: "You would wear a ‘sautoir’ around your neck.",
+    answer: "T"
+  },
+  {
+    question: "Turnip is a ‘rutabaga’ type of vegetable.",
+    answer: "T"
+  },
+  {
+    question: "The Suez Canal is in Italy.",
+    answer: "F"
+  },
+  {
+    question: "Fe is the symbol of iron.",
+    answer: "T"
+  },
+  {
+    question: "Pyrenees is between Greece and Italy",
+    answer: "F"
+  },
+  {
+    question: "The goose was the first bird domesticated by man",
+    answer: "T"
+  },
+  {
+    question: "Neptune is closest to the Sun.",
+    answer: "F"
+  },
+  {
+    question: "Fission powers the sun.",
+    answer: "F"
+  },
+  {
+    question: "The sun is about 5 billion years old.",
+    answer: "T"
+  },
+  {
+    question: "The earth is about 5.5 billion years old.",
+    answer: "F"
+  },
+  {
+    question: "Bruce Springsteen is a guitarist also known as Slowhand",
+    answer: "F"
+  },
+  {
+    question: "An otter's home is called Holt",
+    answer: "T"
+  },
+  {
+    question: "Madonna had a 1985 hit with Saving All My Love For You",
+    answer: "F"
+  },
+  {
+    question: "Sugar Loaf mountain overlooks Rio De Janeiro and its harbour",
+    answer: "T"
+  },
+  {
+    question: "Paul Ince was the first black player to captain England's soccer team",
+    answer: "T"
+  },
+  {
+    question: "In Roman mythology, Neptune is the equivalent to the Greek god Zeus",
+    answer: "F"
+  },
+  {
+    question: "Mr Spock from Star Trek said, 'Live long and prosper'",
+    answer: "T"
+  },
+  {
+    question: "Anton Chekov wrote The Seabeast, Uncle Vanka, and The Apple Park",
+    answer: "F"
+  },
+  {
+    question: "GNU is the other name for Wilderbeast",
+    answer: "F"
+  },
+  {
+    question: "Flowerpot Men had a 1960s hit with Let's Go To San Francisco",
+    answer: "T"
+  },
+  {
+    question: "The time-machine car in the film Back To The Future was the DE LOREAN",
+    answer: "T"
+  }
+  ];
 
-true/false for one question
+
+var turn = 1;
+var noofQues = 1;
+
+//connect true button click to value 1
+
+var buttont = document.getElementById("T");
+var buttonf = document.getElementById("F");
+buttont.addEventListener("click", onClick);
+buttonf.addEventListener("click", onClick);
+var event = document.getElementById(event);
 
 
-//pseudo code:
-User
-Game start
-Question 1
-player 1 select true or false
-question 2
-player 2 select true or false
-until question 10
-End
+//chooseQuestion + display Question
 
-Computer
-Initiate Game
-randomly choose question
-display question
-accept selection from user True/False
-compare with answer, correct or wrong
-keep score +1 or 0
-count number of questions completed +1
-randomly choose question
-display question
-accept selection from user True/False
-compare with answer, correct or wrong
-keep score +1 or 0
-count number of questions completed +1
-count until 10 then finish
-display winner or draw
-reload game
+var randm;
+
+function chooseQn(){
+  randm = Math.floor(Math.random() * questions.length);
+  var dispQn = document.getElementById("questions");
+  dispQn.innerText=questions[randm].question;
+}
+// spliceQnAns();
+function spliceQnAns(){
+var rmvQnAns = questions.splice(randm, 1);
+}
+chooseQn();
 
 
+//keep score
+var scoreP1 = 0;
+var scoreP2 = 0;
 
+function pOneScore(){
+    var one = document.getElementById("one");
+    scoreP1 += 1;
+    one.innerText = scoreP1;
 
+}
 
+function pTwoScore(){
+var two = document.getElementById("two");
+    scoreP2 += 1;
+    two.innerText = scoreP2;
+}
 
+function checkWinner(){
+  if (scoreP1 === scoreP2){
+    alert("It's a tie! Click Reset to play again");
+  }
+  else if (scoreP1 > scoreP2 || scoreP1 === 5){
+    alert("Player 1 wins! Click Reset to play again");
+  }
+  else if (scoreP1 < scoreP2 || scoreP1 === 5){
+    alert("Player 2 wins! Click Reset to play again");
+  }
+}
 
-numberOfQuestions()   //It should return an integer that is the number of questions in a game
-currentQuestion()  //It should return an integer that is the zero-based index of the current question in the quiz
+function onClick(event){
+  var ans = event.target.getAttribute("id");
 
-correctAnswer()  //It should return an integer that is the zero-based index the correct answer for the currrent question
+if (turn % 2 === 1) {
+  if (ans === questions[randm].answer) {
+    pOneScore();
+    turn += 1;
+    noofQues += 1;
+    if(noofQues === 10){checkWinner();}
+    spliceQnAns();
+    chooseQn();
+   console.log("p1 is correct");
+    }
+  else {
+    turn += 1;
+    noofQues += 1;
+    if(noofQues === 10){checkWinner();}
+    spliceQnAns();
+    chooseQn();
+    console.log("p1 is wrong");
+  }
+}
+else if (turn % 2 === 0){
+  if (ans === questions[randm].answer) {
+    pTwoScore();
+    turn += 1;
+    noofQues += 1;
+    if(noofQues === 10){checkWinner();}
+    spliceQnAns();
+    chooseQn();
+    console.log("p2 is correct");
+  }
+  else {
+    turn += 1;
+    noofQues += 1;
+    if(noofQues === 10){checkWinner();}
+    spliceQnAns();
+    chooseQn();
+    console.log("p2 is wrong");
+  }
 
-numberOfAnswers() //It should return an integer that is the number of choices for the current question
-
-playTurn(choice)  //It should take a single integer, which specifies which choice the current player wants to make. It should return a boolean true/false if the answer is correct.
-
-isGameOver() //It should return a true or false if the quiz is over.
-
-whoWon()  //It should return 0 if the game is not yet finished. Else it should return either 1 or 2 depending on which player won. It should return 3 if the game is a draw.
-
-restart()  //It should restart the game so it can be played again.
+}
+}
